@@ -22,9 +22,9 @@ export async function POST(req: Request) {
       {
         input: {
           prompt: prompt,
-          num_inference_steps: 28,
+          num_inference_steps: 13,
           model: "dev",
-          guidance_scale: 10
+          guidance_scale: 9
         }
       }
     );

@@ -16,8 +16,8 @@ const SYSTEM_PROMPTS ={
 
     # System prompt for consistent output formatting
     system_prompt = """
-    Create a 3-panel comic story about a dog's adventure. For each panel, provide:
-    1. An image generation prompt that includes 'C0DY small, white dog' and ends with 'realistic style including background, sharp colors'
+    Create a 3-panel comic story about a dog's adventure or trip. For each panel, provide:
+    1. An image generation prompt that includes 'C0DY small, white dog with no tail' and ends with 'realistic style including background, sharp colors'
     2. A caption that refers to the dog as 'cody'
     
     Format the output as JSON with this structure:
@@ -42,7 +42,7 @@ const SYSTEM_PROMPTS ={
 
     # System prompt for consistent output formatting
     system_prompt = """
-    Create a 3-panel comic story about a dog's adventure. For each panel, provide:
+    Create a 3-panel comic story about a dog's adventure or trip. For each panel, provide:
     1. An image generation prompt that includes 'C0DY small, white dog' and ends with 'cartoon style, soft colors'
     2. A caption that refers to the dog as 'cody'
     
@@ -68,8 +68,8 @@ const SYSTEM_PROMPTS ={
 
     # System prompt for consistent output formatting
     system_prompt = """
-    Create a 3-panel comic story about a dog's adventure. For each panel, provide:
-    1. An image generation prompt that includes 'C0DY small, white dog' and ends with 'surreal existentialist, fractaling colors'
+    Create a 3-panel comic story about a dog's adventure or trip. For each panel, provide:
+    1. An image generation prompt that includes 'C0DY small, white dog with no tail' and ends with 'surreal existentialist, fractaling colors'
     2. A caption that refers to the dog as 'cody'
     
     Format the output as JSON with this structure:

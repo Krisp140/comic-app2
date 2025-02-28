@@ -16,6 +16,11 @@ export default function Home() {
 
   const generateStory = async () => {
     try {
+      if (!prompt.trim()) {
+        setError("Please enter a prompt before generating the comic.");
+        return;
+      }
+
       setIsLoading(true);
       setComicPanels([]);
       setError(null);  // Reset error state
@@ -30,16 +35,20 @@ export default function Home() {
       
       const storyData = await storyResponse.json();
 
+      if (!storyData.result?.comics || storyData.result.comics.length === 0) {
+        throw new Error("Please enter a better prompt.");
+      }
       
       setComicPanels(storyData.result.comics);
       // Start generating images for each panel
       generateNextImage(storyData.result.comics, 0);
     } catch (error) {
       console.error('Error:', error);
-      setError("An error occurred while generating the story. Please try again.");
+      setError(error instanceof Error ? error.message : "An error occurred while generating the story. Please try again.");
       setIsLoading(false);
     }
   };
+
   const generateNextImage = async (panels: typeof comicPanels, index: number) => {
     if (index >= panels.length) {
       setIsLoading(false);
@@ -47,6 +56,10 @@ export default function Home() {
     }
 
     try {
+      if (!panels[index].prompt) {
+        throw new Error(`Empty prompt received for panel ${index + 1}`);
+      }
+
       const response = await fetch('/api/generate_imgs', {
         method: 'POST',
         headers: {
@@ -56,15 +69,18 @@ export default function Home() {
       });
       
       const data = await response.json();
-      if (data.imageUrl) {
-        setComicPanels(prev => prev.map((panel, i) => 
-          i === index ? { ...panel, imageUrl: data.imageUrl } : panel
-        ));
-        // Generate next panel's image
-        generateNextImage(panels, index + 1);
+      if (!data.imageUrl) {
+        throw new Error(`Failed to generate image for panel ${index + 1}`);
       }
+
+      setComicPanels(prev => prev.map((panel, i) => 
+        i === index ? { ...panel, imageUrl: data.imageUrl } : panel
+      ));
+      // Generate next panel's image
+      generateNextImage(panels, index + 1);
     } catch (error) {
       console.error('Error:', error);
+      setError(error instanceof Error ? error.message : `Failed to generate image for panel ${index + 1}`);
       setIsLoading(false);
     }
   };
